@@ -1,17 +1,13 @@
 class Group:
-    def __init__(self, name,goals):
-        self.name = name
-        self.goals = goals
+	def __init__(self, name,goals):
+		self.name = name
+		self.goals = goals
 
-class Goal:
-    def __init__(self, description, tasks):
-        self.description = description
-        self.tasks = tasks
 class Task:
-    def __init__(self, description, user, progress):
-        self.description = description
-        self.user = user
-        self.progress = progress
+	def __init__(self, description, leader, progress):
+		self.description = description
+		self.leader=leader
+		self.progress = progress
 
 import firebase_admin as fba
 from firebase_admin import firestore
@@ -20,12 +16,21 @@ cred=fba.credentials.Certificate('./serviceaccountkey.json')
 mainapp=fba.initialize_app(cred)
 db=firestore.client()
 
-task=db.collection(u'Group')
-temp=task.document('Zjyxs1uG9oVN5ecmHUYh')
-print(temp.get().to_dict()['name'])
-for i in task.get():
-	print(i.id)
+def getTasks(name):
+    newTasks = [Task(None,None,None) for i in range(100)]
+    ref=db.collection(u'Task').where(u'group', u'==', name).get()
+    j = 0
+    for i in ref:
+        description = i.to_dict()['Task_discr']
+        leader = i.to_dict()['Task_leader']
+        progress = i.to_dict()['progress']
+        newTasks[j] = Task(description, leader, progress)
+        j+=1
+    return newTasks
 
-gr1 = Group(temp.get().to_dict()['name'], "blah")
-print("name: "+ gr1.name)
 
+#Example of getting data for group named groupname
+name="groupname"
+task=getTasks(name)
+group=Group(name,task)
+print(group.goals[0].description)
