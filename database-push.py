@@ -52,6 +52,9 @@ def task_update(target,tagname,tagvalue):
 	else:
 		target.update({tagname:tagvalue})
 
+def task_del():
+	pass
+
 def time_remain(target):
 	# return remaining time for one task
 	#print(time_remain('XJ8j7PSM5Aap8cnl845W'))
