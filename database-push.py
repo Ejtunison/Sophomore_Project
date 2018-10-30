@@ -20,7 +20,7 @@ def md5(str):
 	hmd5.update(str.encode(encoding='utf-8'))
 	return hmd5.hexdigest()
 
-def task_add(Task_name,Time_due,Task_discr=None,groupid=None,Task_prior=1,progress=0,Task_leader=__accountname__,Task_parti=None,Time_accom=None,Time_Es=datetime.datetime.utcnow(),Is_accom=False,Has_subtask=False,maintask=None):
+def task_add(Task_name,Time_due,Task_discr=None,groupid=None,Task_prior=1,progress=0,Task_leader=__accountname__,Task_parti=None,Time_accom=None,Time_Es=datetime.datetime.utcnow(),Has_subtask=False,maintask=None):
 	# add a new task to database,could add a sub-task to one existing task
 	# sample use: (return value is a doc instance)
 	# a=task_add(u'tasknumber3',datetime.datetime(2018,10,22,22,22,0),u'discription3',[maintask='QmfuMOqiib23OOd9g8vy'])
@@ -30,7 +30,7 @@ def task_add(Task_name,Time_due,Task_discr=None,groupid=None,Task_prior=1,progre
 		u'Time_due': Time_due, u'Task_prior': Task_prior,
 		u'Task_leader': Task_leader, u'Task_parti': Task_parti,
 		u'Time_accom': Time_accom, u'Time_Es': Time_Es,
-		u'Is_accom': Is_accom, u'Has_subtask': Has_subtask,
+		u'Has_subtask': Has_subtask,
 		u'group':groupid, u'progress':progress
 	}
 	if maintask==None:
@@ -52,8 +52,12 @@ def task_update(target,tagname,tagvalue):
 	else:
 		target.update({tagname:tagvalue})
 
-def task_del():
-	pass
+def task_del(target):
+	if type(target)==str:
+		tar=task.document(target)
+		tar.delete()
+	else:
+		target.delete()
 
 def time_remain(target):
 	# return remaining time for one task
