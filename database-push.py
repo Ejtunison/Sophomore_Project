@@ -53,6 +53,7 @@ def task_update(target,tagname,tagvalue):
 		target.update({tagname:tagvalue})
 
 def task_del(target):
+	#accpet object or id
 	if type(target)==str:
 		tar=task.document(target)
 		tar.delete()
@@ -120,6 +121,14 @@ def user_update(attr,newval,oldval=None):
 	else:
 		user.update({attr:md5(newval)})
 
+def user_del(user):
+	#accpet obj or id
+	if type(user)==str:
+		tar=users.document(user)
+		tar.delete()
+	else:
+		user.delete()
+
 def group_add(name=None,leader=None,party=None):
 	#add a new group to the database
 	tardict = {u'Name': name,u'Leader':leader}
@@ -133,6 +142,12 @@ def group_add(name=None,leader=None,party=None):
 			tardict['Participants'][user_get(i).id]=True
 	return groups.add(tardict)[1]
 
+def group_get(tag):
+	#obtain a group instance by name
+	#should have a more powerful verion in the frontend that could get groups by any participants
+	if len(list(groups.where(u'Name', '==', tag).get())) != 0:
+		return groups.document(list(groups.where(u'Name', '==', tag).get())[0].id)
+
 def group_update(group,field_name,filed_value):
 	if type(group)==str:
 		tar=groups.document(group)
@@ -140,11 +155,13 @@ def group_update(group,field_name,filed_value):
 	else:
 		group.update({field_name:filed_value})
 
-def group_get(tag):
-	#obtain a group instance by name
-	#should have a more powerful verion in the frontend that could get groups by any participants
-	if len(list(groups.where(u'Name', '==', tag).get())) != 0:
-		return groups.document(list(groups.where(u'Name', '==', tag).get())[0].id)
+def group_del(group):
+	#accpet obj or id
+	if type(group)==str:
+		tar=groups.document(group)
+		tar.delete()
+	else:
+		group.delete()
 
 def group_member_add(group,user_id):
 	#group para could accept id/instance, must past a user_id
