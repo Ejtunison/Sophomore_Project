@@ -24,13 +24,15 @@ xx = Checkbutton(gui, text="remember me").grid(row=4, column=1)
 x = 0
 y = 0
 
-def log(gui):
+def log():
     if user_login(email.get(), pwd.get()) != False:
-        gui = CallMainWindow(user_login(email.get(), pwd.get()))
+        global gui
+        gui.destroy()
+        CallMainWindow(user_login(email.get(), pwd.get()))
 
 
 
-c1 = Button(gui, background="#6666ee", text="LOGIN", command=lambda: log(gui)).grid(row=6, column=1)
+c1 = Button(gui, background="#6666ee", text="LOGIN", command=lambda: log()).grid(row=6, column=1)
 g = Button(gui,background="#6666ee", text="Create Account", command = lambda: user_add(email.get(),pwd.get(),usr.get())).grid(row=6,column = 4)
 
 gui.mainloop()
