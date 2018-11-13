@@ -24,7 +24,6 @@ def Call_Window():
     deadlineEntry.grid(row=5, column=2, sticky=W, padx=3, pady=3)
     userEntry.grid(row=7, column=2, sticky=W, padx=3, pady=3)
 
-    ##This Button will not work because the task_add function needs a group id parameter. This will be implemented after Ellen adds the select group button
     taskButton = Button(window, text="Add Task", bg="white", fg="#8b01a5", font="Courier 12", highlightcolor="#ea8ce1",
                         relief="raised", activebackground="#8b01a5", activeforeground="white",
                         command = lambda: task_add(titleEntry, deadlineEntry, descriptionEntry,))

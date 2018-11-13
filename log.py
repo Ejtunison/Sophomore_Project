@@ -22,13 +22,12 @@ x = 0
 y = 0
 
 def log():
+    global gui
     if user_login(email.get(), pwd.get()) != False:
-        global gui
         gui.destroy()
         CallMainWindow(user_login(email.get(), pwd.get()))
     else:
-        global gui
-        a = Label(gui,Text = "Login Failed. Please Try Again").grid(row = 9, column = 0)
+        a = Label(gui,text = "Login Failed. Please Try Again").grid(row = 9, column = 0)
 
 
 
@@ -44,13 +43,12 @@ def add():
     add.mainloop()
 
 def algo(frame):
-    if user_add(email,pwd,usr) != False:
+    global gui
+    if user_add(email.get(),pwd.get(),usr.get()) != False:
         frame.destroy()
-        global gui
         a = Label(gui,text="Account Created. Please Login").grid(row=9,column=0)
     else:
         frame.destroy()
-        global gui
         a = Label(gui,text = "Account Already Exists. Please Login").grid(row = 9, column = 0)
 
 

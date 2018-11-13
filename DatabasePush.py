@@ -136,11 +136,17 @@ def group_update(group,field_name,filed_value):
 	else:
 		group.update({field_name:filed_value})
 
-def group_get(tag):
+def groups_get(usr):
+	if len(list(groups.where(u'Participants', '==', usr).get())) != 0:
+		return groups.document(list(groups.where(u'Participants', '==', usr)))
+	else:
+		return False
+
+#def group_get(tag):
 	#obtain a group instance by name
 	#should have a more powerful verion in the frontend that could get groups by any participants
-	if len(list(groups.where(u'Name', '==', tag).get())) != 0:
-		return groups.document(list(groups.where(u'Name', '==', tag).get())[0].id)
+#	if len(list(groups.where(u'Name', '==', tag).get())) != 0:
+#		return groups.document(list(groups.where(u'Name', '==', tag).get())[0].id)
 
 def group_member_add(group,user_id):
 	#group para could accept id/instance, must past a user_id
