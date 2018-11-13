@@ -70,7 +70,7 @@ def user_add(email,pwd,username):
 	#add a new user to database system, passward encrypted.
 	#will reject creation if username already exict(return a string to indicate that)
 	if len(list(users.where(u'User_email','==',email).get()))>=1:
-		raise EmailAlreadyExist('Failed: Email already exists')
+		return False
 	user_dict={u'User_email':email,u'User_pwd':md5(pwd),u'User_name':username,u'Last_login':None,u'Is_login':False}
 	return users.add(user_dict)[1]
 
